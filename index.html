@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="clock.png">
+    <title>Clock</title>
+    <style>
+        * {
+            font-size: 40px;
+            padding: 10px;
+            margin: auto;
+            max-height: max-content;
+            max-width: max-content;
+        }
+
+        body {
+            /* background-image: linear-gradient(to right, rgb(32, 32, 225), rgb(237, 81, 81), yellowgreen); */
+            /* background-color: rgb(17, 17, 46); */
+            background-image: url(space.jpg);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .clock {
+            position: relative;
+            top: 5rem;
+            left: 3.8rem;
+            margin: 10px;
+            padding: auto;
+            /* background-color: transparent; */
+            /* backdrop-filter: blur(5px); */
+            background-image: linear-gradient(rgba(30, 0, 200, 0.281), rgba(158, 2, 255, 0.349));
+            height: 50px;
+            border-radius: 10px;
+            text-align: center;
+            animation: blinkbdr 0.5s ease 0s infinite alternate both;
+        }
+
+        #session {
+            position: relative;
+            left: 3.3rem;
+            border-left: 1.5px solid navajowhite;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            color: navajowhite;
+            /* background-color: #798898; */
+        }
+
+        .date {
+            /* background-color: transparent; */
+            /* backdrop-filter: blur(5px); */
+            background-image: linear-gradient(rgba(30, 0, 200, 0.269), rgba(158, 2, 255, 0.416));
+            width: 230px;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+            top: 7rem;
+            right: 3rem;
+            animation: blinkbdr 0.5s ease 0s infinite alternate both;
+        }
+
+        #second {
+            animation: blinksec 1s ease-in-out 0s infinite;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            right: 1rem;
+            cursor: pointer;
+        }
+
+        @keyframes blinkbdr {
+            0% {
+                /* bottom: 4; */
+                box-shadow: 0px 0px 15px rgb(30, 30, 30);
+                /* transform: rotatY('0deg'); */
+            }
+
+            25% {
+                box-shadow: 0px 0px 15px rgb(50, 50, 50);
+            }
+
+            50% {
+                box-shadow: 0px 0px 15px rgb(70, 70, 70);
+            }
+
+            75% {
+                box-shadow: 0px 0px 15px rgb(90, 90, 90);
+            }
+
+            100% {
+                box-shadow: 0px 0px 15px rgb(110, 110, 110);
+            }
+        }
+
+        @keyframes blinksec {
+            0% {
+                /* transform: rotateX(0deg); */
+                box-shadow: 0 0 10px rgb(70, 70, 70);
+                /* border-top: .5px solid red; */
+                /* background-color: transparent; */
+            }
+
+
+            100% {
+                background-color: transparent;
+                color: transparent;
+                box-shadow: 0 0 10px rgb(70, 70, 70);
+                /* border-left: .5px solid yellow; */
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock"></div>
+    <div class="container">
+        <div id="hour" class="clock"></div>
+        <div id="minute" class="clock"></div>
+        <div id="second" class="clock"></div>
+        <div id="session" class="clock"></div>
+        <div id="date" class="date"></div>
+    </div>
+
+    <script>
+        // Date Method
+        setInterval(function () {
+            let a = new Date();
+            let h = a.getHours();
+            let m = a.getMinutes();
+            let s = a.getSeconds();
+            let d = a.getDate();
+            let mnth = a.getMonth() + 1;
+            let yr = a.getFullYear();
+            let session = "AM";
+
+            // Number Formating => 1, 2, 3 to 01, 02, 03
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            yr = yr < 10 ? "0" + yr : yr;
+            d = d < 10 ? "0" + d : d;
+            mnth = mnth < 10 ? "0" + mnth : mnth;
+
+            let date = d + "/" + mnth + "/" + yr;
+
+
+            // AM/PM 
+            if (h >= 12) {
+                session = "PM";
+            }
+            else {
+                session = "AM";
+            }
+
+            // Converting 12hr formate        
+            if (h > 12) {
+                h = h - 12;
+            }
+            // h = h > 12 ? h - 12 : 12;   We Also Write like this
+
+
+            //add "0" to single value 1 to 01
+            if (h < 10) {
+                h = "0" + h
+            }
+            // h = h < 10 ? "0" + h : h;
+
+
+            if (h == 0) {
+                h = 12
+            }
+
+
+            document.getElementsByClassName("container")[0].style.color = "navajowhite"
+            document.getElementById("date").innerHTML = date;
+            document.getElementById("hour").innerHTML = h;
+            document.getElementById("minute").innerHTML = m;
+            document.getElementById("second").innerHTML = s;
+            document.getElementById("session").innerHTML = session;
+        }, 1000) 
+    </script>
+</body>
+
+</html>
